@@ -1,6 +1,6 @@
 // NVNformat (nvn.h 0x01–0x9C) → Metal. The table is written entry by entry in NVN enum order; unlisted formats (including 0 and out of range) return 0.
 // Component remapping: "no alpha" formats such as RGBX / RGB_DXT1 read a as 1; RGB-family 16-bit packed formats swap r/b; all others are identity.
-// BC1–7 on iOS require GPU BC support (MTLDevice.supportsBCTextureCompression, iOS 16.4+; A19 supports it; device capability is not checked in this table).
+// BC1–7 stay BC here. A GPU without supportsBCTextureCompression (iPad mini 6 / A15 and older) is remapped to the uncompressed format in nvn_mtl.m, and the blocks are decoded by bc_dec.c.
 #include "nvn_fmt_mtl.h"
 
 enum {   // MTLPixelFormat

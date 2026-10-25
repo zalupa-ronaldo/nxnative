@@ -15,14 +15,14 @@ This project is built on other people's work:
 - **[LibHac](https://github.com/Thealexbarney/LibHac)**: reads NSPs and layers updates over the base game in `dm/tools/nx_extract`. **hactool** did the first extractions.
 - **[SPIRV-Cross](https://github.com/KhronosGroup/SPIRV-Cross)**: SPIR-V to Metal Shading Language. **[glslang](https://github.com/KhronosGroup/glslang)** compiles the GLSL of OpenGL games to SPIR-V for it.
 - **deko3d** (zlib): its texture layout size algorithm is ported in `dm/gfx/nvn/nvn_tex.c`.
-- **libvpx** (VP9 movies), **stb_vorbis** (movie sound), the **Vulkan headers** and **NVIDIA FLIP** ship in `dm/third_party` with their licenses ([list](dm/third_party/README.md)).
+- **libvpx** (VP9 movies), **stb_vorbis** (movie sound), the **Vulkan headers**, **NVIDIA FLIP** and **bcdec** (BC1–BC7 blocks, for GPUs that cannot sample them) ship in `dm/third_party` with their licenses ([list](dm/third_party/README.md)).
 - **Capstone**, **lz4**, **fontTools** and **XcodeGen** are used by the build.
 
 ## Games
 
 Games tested on Mac or iPhone. See the [per-game notes](dm/games/README.md#games) for tested platforms, progress and known issues:
 
-Needs iOS / iPadOS 26 or later on an iPhone 15 Pro or newer (A17 Pro chip or later) or an iPad with an M1 chip or later: the games' textures are BC-compressed, and older iPhones can't read that format. Other games aren't supported yet. For them the script writes a survey and still tries its best to pack an IPA, guessing the game's settings; such an IPA may not start.
+Needs iOS / iPadOS 26 or later. An iPhone 15 Pro or newer, or an iPad with an M1 or newer, samples BC textures in hardware. A GPU without that (an iPad mini 6, an iPhone before the 15 Pro) stores NVN's BC1–BC7 blocks as plain pixels instead; `DM_BC_SOFT=1` forces the same path on a Mac. Vulkan and OpenGL games still need the hardware. On a 4 GB iPad the bigger NVN games are closed for memory even so: decoded blocks take more room than the compressed ones. Other games aren't supported yet. For them the script writes a survey and still tries its best to pack an IPA, guessing the game's settings; such an IPA may not start.
 
 Under each game: the IPA's size, and "60 fps with 1.2.0" where the game runs at 60 fps (30 on the Switch) with that update.
 
